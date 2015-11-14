@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>{{ project.name }}</h1>
+        <p class="lead">{{ project.description|linebreaks }}</p>
+    </div>
+
+    <div class="container">
+    <p class="lead">
+        <a class="btn btn-default {% if not project.trello_id %}disabled{% endif %}" href="{% url 'projects_manager:sync' project.id %}">Sync Project with Trello</a></p>
+        <h3>Details</h3>
+        <dl class="dl-horizontal">
+            <dt>Project repository</dt>
+            <dd><a href="{{ project.link_repository }}">{{ project.link_repository }}</a></dd>
+            <dt>Trello board</dt>
+            <dd><a href="{{ project.trello_url }}">{{ project.trello_url }}</a></dd>
+            <dt>Run date</dt>
+            <dd>{{ project.start_date }}</dd>
+            <dt>Finish date</dt>
+            <dd>{{ project.finish_date }}</dd>
+            <dt>Summary worked time</dt>
+            <dd>{{ project.total_time }}</dd>
+        </dl>
+        <h3>All tasks</h3>
+        {% if tasks %}
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Worked time</th>
+                    <th>Timer</th>
+                </tr>
+                {% for task in tasks %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'projects_manager:task_details' task.id %}">{{ task.name }}</a>
+                        </td>
+                        <td>{{ task.time }}</td>
+                        <td>
+                            {% if task.start_time %}
+                                <a href="{% url 'projects_manager:stop' task.id %}" class="btn btn-danger btn-xs" role="button">STOP</a>
+                            {% else %}
+                                <a href="{% url 'projects_manager:start' task.id %}" class="btn btn-success btn-xs" role="button">START</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>There is no items</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

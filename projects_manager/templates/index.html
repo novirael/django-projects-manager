@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>All your projects</h1>
+    </div>
+
+    <div class="container">
+        <a href="{% url 'projects_manager:create_project' %}" class="btn btn-success" role="button">Create new project</a>
+        <a href="{% url 'projects_manager:create_task' %}" class="btn btn-default" role="button">Add new task</a>
+        {% if projects %}
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Run date</th>
+                    <th>End date</th>
+                    <th>Worked time</th>
+                </tr>
+                {% for project in projects %}
+                <tr>
+                    <td><a href="{% url 'projects_manager:details' project.id %}">{{ project.name }}</a></td>
+                    <td>{{ project.start_date|default:"not set" }}</td>
+                    <td>{{ project.finish_date|default:"not set" }}</td>
+                    <td>{{ project.total_time }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>There are no projects</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

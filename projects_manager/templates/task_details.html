@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>{{ task.project }}</h1>
+        <p class="lead"><a href="{{ task.trello_url }}">{{ task.name }}</a></p>
+   </div>
+
+    <div class="container">
+        <h3>Description</h3>
+        <p>{{ task.description|default:"There is no description"|linebreaks}}</p>
+        <h3>Worked time</h3>
+        <p>{{ task.time }}</p>
+    </div>
+
+{% endblock %}

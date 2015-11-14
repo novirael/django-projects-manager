@@ -1,2 +1,2 @@
-# django-tasks-manager
-Simple tasks manager app basend on Django
+# django-projects-manager
+Simple projects manager app basend on Django
